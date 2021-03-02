@@ -94,7 +94,7 @@ export default function Favorites(props) {
       ) : (
         <View style={styles.loaderRestaurants}>
           <ActivityIndicator size="large" />
-          <Text style={{ textAlign: "center" }}>Cargando restaurantes</Text>
+          <Text style={{ textAlign: "center" }}>Cargando servicios</Text>
         </View>
       )}
       <Toast ref={toastRef} position="center" opacity={0.9} />
@@ -108,7 +108,7 @@ function NotFoundRestaurants() {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Icon type="material-community" name="alert-outline" size={50} />
       <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-        No tienes restaurantes en tu lista
+        No tienes servicios en tu lista
       </Text>
     </View>
   );

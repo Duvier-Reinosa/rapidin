@@ -24,7 +24,7 @@ export default function Search(props) {
   return (
     <View>
       <SearchBar
-        placeholder="Busca tu restaurante..."
+        placeholder="Busca tu servicio..."
         onChangeText={(e) => setSearch(e)}
         value={search}
         containerStyle={styles.searchBar}

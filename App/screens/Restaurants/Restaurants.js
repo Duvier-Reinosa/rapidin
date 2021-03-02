@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback} from "react";
-import { StyleSheet, View, Text} from "react-native";
-import { Icon } from "react-native-elements";
+import { StyleSheet, View, Text, Linking} from "react-native";
+import { Icon, Button } from "react-native-elements";
 import { useFocusEffect } from '@react-navigation/native';
 import { firebaseApp } from "../../utills/firebase";
 import firebase from "firebase/app";
@@ -17,6 +17,36 @@ export default function Restaurants(props){
  const [starRestaurants, setStartRestaurants] = useState(null);
  const [isLoading, setIsLoading] = useState(false);
  const limitRestaurants = 10;
+
+ const [mobileNumber, setMobileNumber] = useState("3127973896");
+  const [whatsAppMsg, setWhatsAppMsg] = useState(".");
+
+
+ const initiateWhatsApp = () => {
+  if (mobileNumber.length != 10) {
+    alert('Please insert correct WhatsApp number');
+    return;
+  }
+  setWhatsAppMsg(whatsAppMsg);
+  // console.log(whatsAppMsg);
+  let url =
+    'whatsapp://send?text=' +
+     whatsAppMsg +
+    '&phone=57' + mobileNumber;
+
+    if (whatsAppMsg != "") {
+      Linking.openURL(url)
+        .then((data) => {
+          console.log('WhatsApp Opened');
+        })
+        .catch(() => {
+          alert('Tienes que tener instalado whatsapp en tu celular');
+        });
+    }else {
+      alert('No puedes envíar un pedido vacío');
+    }
+
+};
 
  useEffect(() => {
    firebase.auth().onAuthStateChanged((userInfo) =>{
@@ -80,6 +110,19 @@ export default function Restaurants(props){
                   containerStyle={styles.btnContainer}
                   onPress={()=> navigation.navigate("add-restaurant")}
                     />)}
+        <Button
+          title="Servicio personalizado"
+          buttonStyle={styles.PerContainer}
+          onPress={initiateWhatsApp}
+          icon={
+            <Icon
+              name="chat"
+              size={15}
+              color="white"
+              iconStyle={styles.icon}
+            />
+          }
+        />
     </View>
   );
 }
@@ -96,5 +139,20 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2},
     shadowOpacity: 0.5,
+  },
+  PerContainer:{
+    position: "absolute",
+    bottom: 18,
+    left: 13,
+    borderRadius: 15,
+    height: 45,
+    backgroundColor: "#ff003c",
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2},
+    shadowOpacity: 0.5,
+  },
+  icon:{
+    marginRight: 5,
+    marginTop: 5
   }
 });

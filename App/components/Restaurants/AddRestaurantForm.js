@@ -83,7 +83,7 @@ export default function AddRestaurantForm(props) {
         />
       <UploadImage toastRef={toastRef} imageSelected={imageSelected} setImageSelected={setImageSelected}/>
       <Button
-        title="Crear Restaurante"
+        title="Añadir servicio"
         onPress={addRestaurant}
         buttonStyle={styles.btnAddRestaurant}
       />
@@ -96,7 +96,7 @@ function FormAdd(props) {
   return (
     <View style={styles.viewForm}>
       <Input
-        placeholder="Nombre del restaurante"
+        placeholder="Nombre del servicio"
         containerStyle={styles.input}
         onChange={e => setRestaurantName(e.nativeEvent.text)}
       />
@@ -106,7 +106,7 @@ function FormAdd(props) {
         onChange={e => setRestaurantAddres(e.nativeEvent.text)}
       />
       <Input
-        placeholder="Descripción del restaurante"
+        placeholder="Descripción del servicio(Que vendes, cuanto vale...)"
         multiline={true}
         inputContainerStyle={styles.textArea}
         onChange={e => setRestaurantDescription(e.nativeEvent.text)}

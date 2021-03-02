@@ -29,7 +29,7 @@ export default function Navigation() {
           name="restaurants"
           component={RestaurantsStack}
           options={{
-            title: "Restaurantes"
+            title: "Servicios"
           }}
         />
         <Tab.Screen
