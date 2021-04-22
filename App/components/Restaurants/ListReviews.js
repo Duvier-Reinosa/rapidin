@@ -35,6 +35,10 @@ export default function ListReviews(props) {
 
   return (
     <View>
+      <Text style={styles.title}>Opiniones</Text>
+      {map(reviews, (review, index) => (
+        <Review key={index} review={review} />
+      ))}
       {userLogged ? (
         <Button
           title="Escribe una opinión"
@@ -64,10 +68,6 @@ export default function ListReviews(props) {
           </Text>
         </View>
       )}
-
-      {map(reviews, (review, index) => (
-        <Review key={index} review={review} />
-      ))}
     </View>
   );
 }
@@ -130,6 +130,11 @@ const styles = StyleSheet.create({
   viewInfo: {
     flex: 1,
     alignItems: "flex-start",
+  },
+  title:{
+    textAlign: "center",
+    margin: 20,
+    fontWeight: "bold",
   },
   reviewTitle: {
     fontWeight: "bold",

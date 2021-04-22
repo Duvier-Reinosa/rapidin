@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
-import { Rating, ListItem, Icon } from "react-native-elements";
-import { map } from "lodash";
+import { Rating, Icon } from "react-native-elements";
+
 import { useFocusEffect } from "@react-navigation/native";
 import Toast from "react-native-easy-toast-types";
 import Loading from "../../components/Loading";
 import Carousel from "../../components/Carousel";
 import ListReviews from "../../components/Restaurants/ListReviews";
-import Whatsapp from "../../components/Whatsapp";
+import Order from "../../components/Order";
+import Products from "../../components/Products";
 
 import {firebaseApp} from "../../utills/firebase";
 import firebase from "firebase/app";
@@ -18,12 +19,13 @@ const screenWidth = Dimensions.get("window").width;
 
 export default function Restaurant(props) {
   const {navigation, route} = props;
-  const {id, name} = route.params;
+  const {id, name, createBy} = route.params;
   const [restaurant, setRestaurant] = useState(null);
   const [rating, setRating] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [userLogged, setUserLogged] = useState(false);
   const toastRef = useRef();
+
 
   navigation.setOptions({title: name});
 
@@ -117,7 +119,7 @@ export default function Restaurant(props) {
             size={35}
             underlayColor="transparent"
           />
-        </View>
+      </View>
       <Carousel
         arrayImages={restaurant.images}
         height= {250}
@@ -128,7 +130,8 @@ export default function Restaurant(props) {
         description={restaurant.description}
         rating={rating}
       />
-      <Whatsapp name={restaurant.name}/>
+      <Products createBy={createBy}/>
+      <Order createBy={createBy} navigation={navigation}/>
       <ListReviews
         navigation={navigation}
         idRestaurant={restaurant.id}

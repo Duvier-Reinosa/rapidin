@@ -10,6 +10,7 @@ export default function UserLogged(){
   const [userInfo, setUserInfo] =useState(null);
   const [reloadUserInfo, setReloadUserInfo] =useState(false);
   const toastRef = useRef();
+  console.log(reloadUserInfo);
 
   useEffect(() => {
     (async () => {

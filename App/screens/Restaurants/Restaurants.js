@@ -50,7 +50,6 @@ export default function Restaurants(props){
 
  useEffect(() => {
    firebase.auth().onAuthStateChanged((userInfo) =>{
-     console.log(userInfo);
      setUser(userInfo);
    })
  }, []);
@@ -102,14 +101,6 @@ export default function Restaurants(props){
   return(
     <View style={styles.viewBody}>
       <ListRestaurants restaurants = {restaurants} handleLoadMore={handleLoadMore} isLoading={isLoading}/>
-      {user && (<Icon
-                  reverse
-                  type="material-community"
-                  name="plus"
-                  color="#ff003c"
-                  containerStyle={styles.btnContainer}
-                  onPress={()=> navigation.navigate("add-restaurant")}
-                    />)}
         <Button
           title="Servicio personalizado"
           buttonStyle={styles.PerContainer}

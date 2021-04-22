@@ -10,7 +10,7 @@ import { firebaseApp } from "../../utills/firebase";
 import firebase from "firebase/app";
 import "firebase/storage";
 import  "firebase/firestore";
-const db = firebase.firestore(firebaseApp );
+const db = firebase.firestore(firebaseApp);
 
 const widthScreen = Dimensions.get("window").width;
 
@@ -63,7 +63,7 @@ export default function AddRestaurantForm(props) {
         await ref.put(blob).then(async (result)=>{
           await firebaseApp
           .storage()
-          .ref(`restaurants/${result.metadata.name}`)
+          .ref(`restaurants${result.metadata.name}`)
           .getDownloadURL()
           .then((photoUrl) => {
               imageBlob.push(photoUrl);
