@@ -1,7 +1,8 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useCallback} from "react";
 import {StyleSheet, View, Text, Linking} from "react-native";
 import { Input, Button } from "react-native-elements";
 import Toast from 'react-native-easy-toast-types';
+import {useFocusEffect, useIsFocused} from "@react-navigation/native";
 
 import { firebaseApp } from "../utills/firebase";
 import firebase from 'firebase/app';
@@ -17,6 +18,29 @@ export default function Order(props) {
     const [direction, setDirection] = useState("");
     const [phone, setPhone] = useState("");
     const [note, setNote] = useState("");
+
+    const [products, setProducts] = useState([]);
+  
+    
+  
+
+  
+    let ref = "products" + createBy; //para referencias sin errores
+  
+    useFocusEffect(
+       useCallback(()=>{
+          const resultProducts = [];
+          const resultIds = []
+          db.collection(ref).get().then((snap)=>{
+          snap.forEach((doc)=>{
+          resultIds.push(doc.id);
+          resultProducts.push(doc.data())
+          })
+          setProducts(resultProducts);
+       });
+  
+       }, [])
+    );
 
     const order = {
         orderName : orderName,
@@ -43,39 +67,45 @@ export default function Order(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>¡Pide lo que quieras!</Text>
-      <Input
-        placeholder="¿Que quieres pedir?"
-        multiline={true}
-        inputContainerStyle={styles.textArea}
-        onChange={(e) => setOrderName(e.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Tu número de celular"
-        multiline={true}
-        inputContainerStyle={styles.textArea}
-        onChange={(e) => setPhone(e.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Dirección de entrega"
-        multiline={true}
-        inputContainerStyle={styles.textArea}
-        onChange={(e) => setDirection(e.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Anotaciones"
-        multiline={true}
-        inputContainerStyle={styles.textArea}
-        onChange={(e) => setNote(e.nativeEvent.text)}
-      />
-      <Button
-        title="Enviar Pedido"
-        containerStyle={styles.btnContainer}
-        buttonStyle={styles.btn}
-        onPress={sendOrder}
-      />
-    <Toast ref={toastRef} position="center"/>
+    <View >
+      {
+      (products.length > 0) ? 
+        <View style={styles.container}>
+          <Text style={styles.title}>¡Pide lo que quieras!</Text>
+          <Input
+            placeholder="¿Que quieres pedir?"
+            multiline={true}
+            inputContainerStyle={styles.textArea}
+            onChange={(e) => setOrderName(e.nativeEvent.text)}
+          />
+          <Input
+            placeholder="Tu número de celular"
+            multiline={true}
+            inputContainerStyle={styles.textArea}
+            onChange={(e) => setPhone(e.nativeEvent.text)}
+          />
+          <Input
+            placeholder="Dirección de entrega"
+            multiline={true}
+            inputContainerStyle={styles.textArea}
+            onChange={(e) => setDirection(e.nativeEvent.text)}
+          />
+          <Input
+            placeholder="Anotaciones"
+            multiline={true}
+            inputContainerStyle={styles.textArea}
+            onChange={(e) => setNote(e.nativeEvent.text)}
+          />
+          <Button
+            title="Enviar Pedido"
+            containerStyle={styles.btnContainer}
+            buttonStyle={styles.btn}
+            onPress={sendOrder}
+          />
+        <Toast ref={toastRef} position="center"/>
+      </View> : <View></View>
+    }
+      
     </View>
   );
 }
